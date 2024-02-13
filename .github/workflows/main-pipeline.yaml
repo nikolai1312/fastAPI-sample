@@ -3,19 +3,20 @@
 #   - Buildar a imagem docker
 #   - Caso dê erro na execução do container, recusar a PR e enviar uma mensagem 
 #   - Caso dê sucesso, enviar mensagem dizendo que a PR está esperando aprovação de um reviewer 
-name: "Main protection"
+name: Main branch protection
 
-description: "Check the pull request with the current production environment"
+description: Check the pull request with the current production environment
 
 on:
-  pull-request:
+  pull_request_target:
+    types:
+      - [opened, reopened]
     branches:
-      - master
-      - develop
+      - ['feature/**', 'develop', 'master']
 
 jobs:
-  build:
-    name: Run code to check missing dependencies
+  run_if: 
+    if:   startsWith(github.head_ref, 'feature/')
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,4 +33,5 @@ jobs:
       - name: Install Dependencies
         run: pip install --no-cache-dir --upgrade -r requirements.txt
 
-      
+      - name: Run code
+        run: python3 main.py
