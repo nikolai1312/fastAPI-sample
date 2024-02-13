@@ -1,0 +1,30 @@
+name: Main branch protection
+
+on:
+  pull_request:
+    branches:
+      - 'feature/**' 
+      - 'develop'
+      - 'master'
+
+jobs:
+  run_if: 
+    if:   startsWith(github.head_ref, 'feature/')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [3.9]
+    steps:
+      - name: check out repo
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+      
+      - name: Install Dependencies
+        run: pip install --no-cache-dir --upgrade -r requirements.txt
+
+      - name: Run code
+        run: python3 main.py
