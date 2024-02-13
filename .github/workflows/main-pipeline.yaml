@@ -1,0 +1,35 @@
+#           TODO
+#   - Abrir uma PR
+#   - Buildar a imagem docker
+#   - Caso dê erro na execução do container, recusar a PR e enviar uma mensagem 
+#   - Caso dê sucesso, enviar mensagem dizendo que a PR está esperando aprovação de um reviewer 
+name: "Main protection"
+
+description: "Check the pull request with the current production environment"
+
+on:
+  pull-request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    name: Run code to check missing dependencies
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: "3.9"
+    steps:
+      - name: check out repo
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+      
+      - name: Install Dependencies
+        run: pip install --no-cache-dir --upgrade -r requirements.txt
+
+      
