@@ -8,11 +8,11 @@ name: 'Main branch protection'
 description: 'Check the pull request with the current production environment'
 
 on:
-  pull_request:
-    types:
-      - [opened, reopened]
-    branches:
-      - ['feature/**', 'develop', 'master']
+    pull_request:
+      types: 
+        - [opened, reopened]
+      branches: 
+        - ['feature/**', 'develop', 'master']
 
 jobs:
   run_if: 
