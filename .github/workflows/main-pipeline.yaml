@@ -3,9 +3,9 @@
 #   - Buildar a imagem docker
 #   - Caso dê erro na execução do container, recusar a PR e enviar uma mensagem 
 #   - Caso dê sucesso, enviar mensagem dizendo que a PR está esperando aprovação de um reviewer 
-name: Main branch protection
+name: 'Main branch protection'
 
-description: Check the pull request with the current production environment
+description: 'Check the pull request with the current production environment'
 
 on:
   pull_request_target:
